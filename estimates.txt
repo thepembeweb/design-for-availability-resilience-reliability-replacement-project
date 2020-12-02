@@ -1,0 +1,13 @@
+1. Minimum RTO for a single AZ outage:
+This is automated as Amazon RDS automatically switches to a standby replica in another Availability Zone.
+Which may take 60 – 120 seconds.
+
+2. Minimum RTO for a single region outage:
+The RTO will be the time needed to promote the RDS Read Replica to a standalone primary instance.
+Since this is manual, it can take a minimum of 40 minutes to 1 hour.
+
+3. Minimum RPO for a single AZ outage
+5 minutes
+
+4. Minimum RPO for a single region outage:
+5 minutes as well since there is an active read replica.
