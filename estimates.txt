@@ -1,13 +1,25 @@
 1. Minimum RTO for a single AZ outage:
-This is automated as Amazon RDS automatically switches to a standby replica in another Availability Zone.
-Which may take 60 – 120 seconds.
+00:00 - Problem happens (0 minutes)
+00:05 - An amount of time passes before an alert triggers (5 minutes)
+00:06 - Alert notifies system (1 minute)
+00:11 - Switches to second availability zone (5 minutes)
+00:12 - Alert notifies system of switch (1 minute)
+TOTAL: ~12 minutes
 
 2. Minimum RTO for a single region outage:
-The RTO will be the time needed to promote the RDS Read Replica to a standalone primary instance.
-Since this is manual, it can take a minimum of 40 minutes to 1 hour.
+00:00 - Problem happens (0 minutes)
+00:05 - An amount of time passes before an alert triggers (5 minutes)
+00:06 - Alert triggers on-call staff (1 minutes)
+00:16 - On-call staff get out of bed, get to computer, log in (10 minutes)
+00:26 - On-call staff start diagnosing issue (10 minutes)
+00:41 - Root cause is discovered (15 minutes)
+00:46 - Remediation started (5 minutes)
+00:56 - Remediation completed (10 minutes)
+00:57 - Alert notifies system of update (1 minute)
+TOTAL: ~57 minutes
 
 3. Minimum RPO for a single AZ outage
-5 minutes
+RDS has point in time restore available after every 5 min. At the most data loss will be of 5 minutes.
 
 4. Minimum RPO for a single region outage:
-5 minutes as well since there is an active read replica.
+With asynchronous read replication, there can be a replication lag between master and read replica. If the region is far, latency can make the replication slower also. RPO also depends on the application behavior when the master DB is down because it fails fast and trigger alert or keep woking without updating the DB. The RPO depends on how the read replica captures the latest changes on master DB. It can range from a sub-seconds to minutes.
