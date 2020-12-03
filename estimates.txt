@@ -22,4 +22,4 @@ TOTAL: ~57 minutes
 RDS has point in time restore available after every 5 min. At the most data loss will be of 5 minutes.
 
 4. Minimum RPO for a single region outage:
-With asynchronous read replication, there can be a replication lag between master and read replica. If the region is far, latency can make the replication slower also. RPO also depends on the application behavior when the master DB is down because it fails fast and trigger alert or keep woking without updating the DB. The RPO depends on how the read replica captures the latest changes on master DB. It can range from a sub-seconds to minutes.
+Read replicas are almost kept in sync with the primary database, ideally, they will be having the same RPO as the primary database. For the practical purpose we can consider at most the RPO should be ±10 mins.
